@@ -2,7 +2,9 @@ package lib
 
 import (
 	"database/sql"
+	_ "github.com/mattn/go-sqlite3"
 	"log"
+	"os/user"
 	"time"
 )
 
@@ -11,7 +13,11 @@ type SqlLite struct {
 }
 
 func NewSqlLiteClient() *SqlLite {
-	db, err := sql.Open("sqlite3", "./count.db")
+	user, err := user.Current()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	db, err := sql.Open("sqlite3", user.HomeDir + "/.countDb/count.db")
 	if err != nil {
 		log.Fatalln(err)
 	}
