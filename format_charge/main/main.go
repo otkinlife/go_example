@@ -32,7 +32,11 @@ func main() {
 		}
 		data = append(data, weChatData[1:]...)
 	}
+	sqlClient := lib.NewSqlLiteClient()
+	defer sqlClient.Close()
+	sqlClient.ImportAllRows(data)
 	lib.WriteCsv(data, title)
+
 }
 
 
