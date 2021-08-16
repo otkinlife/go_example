@@ -2,9 +2,8 @@ package lib
 
 import (
 	"database/sql"
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/go-sql-driver/mysql"
 	"log"
-	"os/user"
 	"time"
 )
 
@@ -13,11 +12,7 @@ type SqlLite struct {
 }
 
 func NewSqlLiteClient() *SqlLite {
-	user, err := user.Current()
-	if err != nil {
-		log.Fatalln(err)
-	}
-	db, err := sql.Open("sqlite3", user.HomeDir + "/.countDb/count.db")
+	db, err := sql.Open("mysql", "root:123456@tcp(192.168.31.229:3306)/count")
 	if err != nil {
 		log.Fatalln(err)
 	}
